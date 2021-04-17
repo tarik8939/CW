@@ -1,8 +1,22 @@
-﻿@{
+﻿@using System.Security.Claims
+@using System.Collections
+@using CW.Controllers
+@using Microsoft.AspNetCore.Http
+@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CW.ViewModels.LoginModel
+
+@User.IsInRole("Driver-Intern")
+
+
+@if (@User.Identity.IsAuthenticated == false)
+{
+    @await Html.PartialAsync("../Account/Login")
+}
+@if (@User.Identity.IsAuthenticated == true &&(@User.IsInRole("Driver-Intern") || @User.IsInRole("Driver")==true))
+{
+    @Html.ActionLink("Get schedule", "GetSheduleForWorker","Schedules", new {email = @User.Identity.Name }, new { @class = "col-md-6 btn btn-primary" })
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>

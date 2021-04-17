@@ -1,0 +1,74 @@
+﻿@model IEnumerable<CW.Models.Schedule>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@Model.Count()*@
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeInTravel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Route.CityFrom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Route.CityTo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Route.Mileage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Route)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transport)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeInTravel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Route.CityFromNavigation.City1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Route.CityToNavigation.City1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Route.Mileage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Route.RouteId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transport.ModelName)
+            </td>
+
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.ScheduleId">Edit</a> |*@
+                <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a> |
+                @*<a asp-action="Delete" asp-route-id="@item.ScheduleId">Delete</a>*@
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

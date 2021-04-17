@@ -24,8 +24,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                    </ul>
+                        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Driver-Intern") || @User.IsInRole("Driver") == true))
+                        {
+                    <li class="nav-item">
+                        @Html.ActionLink("Get schedule", "GetSheduleForWorker", "Schedules", new { email = @User.Identity.Name }, new { @class = "nav-link text-dark" })
+                    </li>
+                        }
+                        </ul>
                 </div>
+
+                @if (@User.Identity.IsAuthenticated == true)
+                {
+                    <div class="dropdown show">
+                        <button class="btn btn-primary dropdown-to" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hello @User.Identity.Name
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item text-primary" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="dropdown-item text-primary" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                        </div>
+                    </div>
+                }
+
             </div>
         </nav>
     </header>
