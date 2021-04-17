@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -16,7 +17,9 @@ namespace CW.Models
 
         public int WorkerId { get; set; }
         public int RoleId { get; set; }
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
         public string Password { get; set; }
         public string PhoneNumber { get; set; }

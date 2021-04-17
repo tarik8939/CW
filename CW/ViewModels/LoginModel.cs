@@ -8,6 +8,7 @@ namespace CW.ViewModels
 {
     public class LoginModel
     {
+        [RegularExpression("^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$",ErrorMessage = "Please, write email correctly")]
         [Required(ErrorMessage = "Field 'Email' must be set")]
         public string Email { get; set; }
 
