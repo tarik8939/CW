@@ -179,6 +179,7 @@ namespace CW.Controllers
         }
 
         //список маршрутів для певного водія
+        [Authorize(Roles = "Admin,Driver-Intern,Driver")]
         public async Task<IActionResult> GetSheduleForWorker(string email)
         {
             //var worker = await _context.Workers.FirstOrDefaultAsync(x => x.Email == email);

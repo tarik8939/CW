@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - CW</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
 </head>
 <body>
     <header>
@@ -26,9 +27,15 @@
                         </li>
                         @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Driver-Intern") || @User.IsInRole("Driver") == true))
                         {
-                    <li class="nav-item">
-                        @Html.ActionLink("Get schedule", "GetSheduleForWorker", "Schedules", new { email = @User.Identity.Name }, new { @class = "nav-link text-dark" })
-                    </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Get schedule", "GetSheduleForWorker", "Schedules", new { email = @User.Identity.Name }, new { @class = "nav-link text-dark" })
+                            </li>
+                        }
+                        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Cashier-Intern") || @User.IsInRole("Cashier") == true))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Search route", "Search", "Routes", new {  }, new { @class = "nav-link text-dark" })
+                            </li>
                         }
                         </ul>
                 </div>
@@ -60,9 +67,25 @@
             &copy; 2021 - CW - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="lib/jquery-validation-unobtrusive/"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+<script type="text/javascript">
+
+    $("#tc").click(function() {
+        var price1 = @Convert.ToDouble(@ViewData["TicketPrice"]);
+        var count = $("#tc").val();
+        var rez = parseFloat(price1) * parseFloat(count);
+        $("#valforall").val(rez);
+
+    });
+
+    //$(document).ready(function() {
+    //    alert();
+    //});
+</script>
 </body>
 </html>

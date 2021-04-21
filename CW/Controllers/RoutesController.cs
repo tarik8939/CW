@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CW.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CW.Controllers
 {
@@ -25,15 +26,16 @@ namespace CW.Controllers
             return View(await cWContext.ToListAsync());
         }
         [HttpGet]
+        [Authorize(Roles = "Admin,Cashier-Intern,Cashier")]
         public IActionResult Search()
         {
             ViewData["CityFrom"] = new SelectList(_context.Cities, "CityId", "City1");
             ViewData["CityTo"] = new SelectList(_context.Cities, "CityId", "City1");
-            var list = _context.Cities.ToList();
             return View();
         }
         //[HttpPost("{CityFrom}/{СityTo}")]
         //public async Task<IActionResult> FindRoute(string CityFrom, string СityTo)
+        [Authorize(Roles = "Admin,Cashier-Intern,Cashier")]
         public async Task<IActionResult> FindRoute(Route route)
         {
             var list = _context.Routes.Where(x => x.CityFrom == route.CityFrom).Where(x => x.CityTo == route.CityTo)
@@ -51,7 +53,6 @@ namespace CW.Controllers
                 .Include(x=>x.Transport)
                     .ThenInclude(x=>x.Brand)
                 .ToListAsync();
-
             return View("../Schedules/Index", schedule);
         }
 

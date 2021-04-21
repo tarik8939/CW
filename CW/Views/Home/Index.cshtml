@@ -7,16 +7,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model CW.ViewModels.LoginModel
-
-@User.IsInRole("Driver-Intern")
+@*@User.IsInRole("Driver-Intern")*@
 
 
 @if (@User.Identity.IsAuthenticated == false)
 {
     @await Html.PartialAsync("../Account/Login")
 }
-@if (@User.Identity.IsAuthenticated == true &&(@User.IsInRole("Driver-Intern") || @User.IsInRole("Driver")==true))
+@if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Driver-Intern") || @User.IsInRole("Driver") == true))
 {
-    @Html.ActionLink("Get schedule", "GetSheduleForWorker","Schedules", new {email = @User.Identity.Name }, new { @class = "col-md-6 btn btn-primary" })
+    @Html.ActionLink("Get schedule", "GetSheduleForWorker", "Schedules", new { email = @User.Identity.Name }, new { @class = "col-md-6 btn btn-primary" })
+}
+@if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Cashier-Intern") || @User.IsInRole("Cashier") == true))
+{
+    @Html.ActionLink("Search route", "Search", "Routes", new {  }, new { @class = "col-md-6 btn btn-primary" })
 }
 

@@ -1,0 +1,52 @@
+﻿@model CW.Models.Purchase
+
+@{
+    ViewData["Title"] = "Create";
+    var price = Convert.ToDouble(@ViewData["TicketPrice"]);
+}
+
+<h1>Create</h1>
+
+<h4>Purchase</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Client.FirstName" class="control-label"></label>
+                <input asp-for="Client.FirstName" class ="form-control" asp-items="Client.FirstName"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="Client.LastName" class="control-label"></label>
+                <input asp-for="Client.LastName" class ="form-control" asp-items="Client.LastName"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <select asp-for="DepartmentId" class ="form-control" asp-items="ViewBag.DepartmentId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalPrice" class="control-label"></label>
+                <input asp-for="TotalPrice" class="form-control" value=" " id="valforall" />
+                @*<span asp-validation-for="TotalPrice" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketCount" class="control-label"></label>
+                <input asp-for="TicketCount" class="form-control" value="1" id="tc"/>
+                <span asp-validation-for="TicketCount" class="text-danger" ></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+}

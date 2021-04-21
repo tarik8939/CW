@@ -1,0 +1,33 @@
+﻿@model CW.Models.Ticket
+
+@{
+    ViewData["Title"] = "BuyTicket";
+}
+
+<h1>BuyTicket</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CalculatePrice">
+
+            <div class="form-group">
+                <label asp-for="RouteStopFrom" class="control-label"></label>
+                <select asp-for="RouteStopFrom" class="form-control" asp-items="ViewBag.RouteStopFrom"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RouteStopTo" class="control-label"></label>
+                <select asp-for="RouteStopTo" class="form-control" asp-items="ViewBag.RouteStopTo"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+
+        
+    </div>
+
+</div>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
