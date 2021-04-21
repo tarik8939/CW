@@ -178,7 +178,7 @@ namespace CW.Controllers
             return _context.Schedules.Any(e => e.ScheduleId == id);
         }
 
-        //список маршрутів для перного водія
+        //список маршрутів для певного водія
         public async Task<IActionResult> GetSheduleForWorker(string email)
         {
             //var worker = await _context.Workers.FirstOrDefaultAsync(x => x.Email == email);

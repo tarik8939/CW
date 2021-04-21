@@ -1,0 +1,27 @@
+﻿@model CW.Models.Route
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="FindRoute">
+
+            <div class="form-group">
+                <label asp-for="CityFrom"  class="control-label"></label>
+                <select asp-for="CityFrom" class ="form-control" asp-items="ViewBag.CityFrom"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CityTo" class="control-label"></label>
+                <select asp-for="CityTo" class ="form-control" asp-items="ViewBag.CityTo"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+        
+
+    </div>
+
+</div>

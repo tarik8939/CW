@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -17,6 +18,8 @@ namespace CW.Models
         public int TicketCount { get; set; }
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUpdated { get; set; }
+
+        [NotMapped] public string ClientFullName => $"{Client.FirstName} {Client.LastName}";
 
         public virtual Client Client { get; set; }
         public virtual Department Department { get; set; }
