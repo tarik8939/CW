@@ -42,8 +42,14 @@ namespace CW.Controllers
             tmpobj = item;
             return View();
         }
+        public double CalcDist(City cityfrom, City cityto)
+        {
+            const double R = 6371;
+            double sin1 = Math.Sin((double)((cityfrom.latitude - cityto.latitude) / 2));
+            double sin2 = Math.Sin((double)((cityfrom.longitude - cityto.longitude) / 2));
+            return 2 * R * Math.Asin(Math.Sqrt(sin1 * sin1 + sin2 * sin2 * Math.Cos((double)cityfrom.latitude) * Math.Cos((double)cityto.latitude)));
 
-
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -51,16 +57,18 @@ namespace CW.Controllers
         public ActionResult CalculatePrice(Ticket t)
         {
 
-            var obj = _context.RouteStops.FirstOrDefault(x => x.StopId == t.RouteStopFrom);
-            var obj2 = _context.RouteStops.FirstOrDefault(x => x.StopId == t.RouteStopTo);
-            var dist = obj2.DistanceToStop - obj.DistanceToStop;
-
+            var obj = _context.RouteStops.Include(x=>x.City)
+                .Include(x=>x.Route).FirstOrDefault(x => x.StopId == t.RouteStopFrom);
+            var obj2 = _context.RouteStops.Include(x => x.City)
+                .Include(x => x.Route).FirstOrDefault(x => x.StopId == t.RouteStopTo);
+            obj.DistanceToStop = CalcDist(obj.Route.CityFromNavigation, obj.City);
+            obj2.DistanceToStop = CalcDist(obj2.Route.CityFromNavigation, obj2.City);
             var schedule = tmpobj as Schedule;
             var transport = _context.Transports.FirstOrDefault(x => x.TransportId == schedule.TransportId);
             DateTime startTime = CalcTime(schedule,obj);
             DateTime endTime = CalcTime(schedule, obj2);
             t.ScheduleId = schedule.ScheduleId;
-            t.Price = (decimal) (transport.PricePerKm * (obj2.DistanceToStop - obj.DistanceToStop));
+            t.Price = (decimal) (transport.PricePerKm * (decimal?) (obj2.DistanceToStop - obj.DistanceToStop));
             t.RouteStopFrom = obj.StopId;
             t.RouteStopTo = obj2.StopId;
             t.StartTime = startTime;
@@ -81,7 +89,7 @@ namespace CW.Controllers
         private DateTime CalcTime(Schedule schedule, RouteStop? routeStop)
         {
             DateTime date =schedule.StartDateTime;
-            var time = Math.Ceiling(Convert.ToDouble(routeStop.DistanceToStop / 60.0)); //routeStop.DistanceToStop / 60.0;
+            var time = Math.Ceiling(Convert.ToDouble(routeStop.DistanceToStop / 60.0)); 
             date = date.AddHours(time);
             return date;
         }

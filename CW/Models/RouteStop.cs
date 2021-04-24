@@ -18,7 +18,7 @@ namespace CW.Models
         public int RouteId { get; set; }
         public int CityId { get; set; }
         public int StopNumber { get; set; }
-        public int DistanceToStop { get; set; }
+        public double DistanceToStop { get; set; }
         public DateTime DateAdded { get; set; }
         public DateTime? DateUpdated { get; set; }
 
