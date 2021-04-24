@@ -4,8 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*@Model.Count()*@
-
 <table class="table">
     <thead>
     <tr>
@@ -19,10 +17,7 @@
             @Html.DisplayNameFor(model => model.TimeInTravel)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Route.CityFrom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Route.CityTo)
+            @Html.DisplayNameFor(model => model.Route.RouteName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Route.Mileage)
@@ -48,10 +43,7 @@
                 @Html.DisplayFor(modelItem => item.TimeInTravel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Route.CityFromNavigation.City1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Route.CityToNavigation.City1)
+                @Html.DisplayFor(modelItem => item.Route.RouteName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Route.Mileage)
@@ -60,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Route.RouteId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Transport.ModelName)
+                @Html.DisplayFor(modelItem => item.Transport.TransportName)
             </td>
 
             <td>

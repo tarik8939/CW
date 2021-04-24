@@ -4,23 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-@*<h1>Index</h1>
+<h1>List of schedules</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
-</p>*@
+</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Route.CityFrom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Route.CityTo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Route.NumberOfRoute)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDateTime)
             </th>
@@ -31,13 +22,16 @@
                 @Html.DisplayNameFor(model => model.TimeInTravel)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Route.RouteName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Route.Mileage)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Transport.ModelName)
+                @Html.DisplayNameFor(model => model.Route)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Transport.Brand.BrandName)
+                @Html.DisplayNameFor(model => model.Transport)
             </th>
             <th></th>
         </tr>
@@ -45,15 +39,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Route.CityFromNavigation.City1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Route.CityToNavigation.City1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Route.NumberOfRoute)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDateTime)
             </td>
@@ -64,19 +49,26 @@
                 @Html.DisplayFor(modelItem => item.TimeInTravel)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Route.RouteName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Route.Mileage)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Transport.ModelName)
+                @Html.DisplayFor(modelItem => item.Route.RouteId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Transport.Brand.BrandName)
+                @Html.DisplayFor(modelItem => item.Transport.TransportName)
             </td>
-            @*<td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.ScheduleId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a> |
+                
+                @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+                {
                 <a asp-action="Delete" asp-route-id="@item.ScheduleId">Delete</a>
-            </td>*@
+                }
+            </td>
             <td>
                 <a asp-controller="Purchases" asp-action="BuyTicket" asp-route-id="@item.ScheduleId">Buy</a>
             </td>

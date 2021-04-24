@@ -35,10 +35,10 @@
             @Html.DisplayFor(model => model.Route.Mileage)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RouteId)
+            @Html.DisplayNameFor(model => model.Route.RouteName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RouteId)
+            @Html.DisplayFor(model => model.Route.RouteName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Route.NumberOfRoute)
@@ -47,16 +47,10 @@
             @Html.DisplayFor(model => model.Route.NumberOfRoute)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Transport.ModelName)
+            @Html.DisplayNameFor(model => model.Transport.TransportName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Transport.ModelName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Transport.Brand.BrandName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Transport.Brand.BrandName)
+            @Html.DisplayFor(model => model.Transport.TransportName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Transport.SeatCount)
@@ -65,28 +59,30 @@
             @Html.DisplayFor(model => model.Transport.SeatCount)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Worker.FirstName)
+            @Html.DisplayNameFor(model => model.Worker.WorkerFullName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Worker.FirstName)
+            @Html.DisplayFor(model => model.Worker.WorkerFullName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Worker.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Worker.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Worker.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Worker.Email)
-        </dd>
+        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Worker.Email)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Worker.Email)
+            </dd>
+        }
+
 
     </dl>
 </div>
 <div>
-    @*<a asp-action="Edit" asp-route-id="@Model.ScheduleId">Edit</a> |*@
+    @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.ScheduleId">Edit</a> 
+    }
+    
 
     <a asp-action="Index">Back to List</a>
 </div>
