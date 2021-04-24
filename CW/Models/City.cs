@@ -18,6 +18,9 @@ namespace CW.Models
 
         public int CityId { get; set; }
         public string City1 { get; set; }
+        public double? latitude { get; set; }//широта
+        public double? longitude { get; set; }//довгота
+
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUpdated { get; set; }
 

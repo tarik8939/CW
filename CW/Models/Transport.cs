@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -25,6 +26,9 @@ namespace CW.Models
         public decimal? PricePerKm { get; set; }
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUpdated { get; set; }
+        [NotMapped] 
+        [Display(Name = "Transport")]
+        public string TransportName => $"{Brand.BrandName} - {ModelName}";
 
         public virtual Brand Brand { get; set; }
         public virtual BusType BusType { get; set; }

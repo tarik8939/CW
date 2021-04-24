@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -26,6 +27,9 @@ namespace CW.Models
         public string Email { get; set; }
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUpdated { get; set; }
+        [NotMapped]
+        [Display(Name = "Worker")]
+        public string WorkerFullName => $"{FirstName} {LastName}";
 
         public virtual Role Role { get; set; }
         public virtual ICollection<Purchase> Purchases { get; set; }

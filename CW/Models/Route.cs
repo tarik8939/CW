@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -23,10 +24,14 @@ namespace CW.Models
         public int? CityTo { get; set; }
         [Display(Name = "Number of route")]
         public string NumberOfRoute { get; set; }
-        public int? StopCount { get; set; }
+        //public int? StopCount { get; set; }
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUpdated { get; set; }
 
+        public int? StopCount => RouteStops.Count;
+        [NotMapped] 
+        [Display(Name = "Start/End city")]
+        public string RouteName => $"{CityFromNavigation.City1} - {CityToNavigation.City1}";
         public virtual City CityFromNavigation { get; set; }
         public virtual City CityToNavigation { get; set; }
         public virtual ICollection<RouteStop> RouteStops { get; set; }
