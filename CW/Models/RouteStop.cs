@@ -13,7 +13,7 @@ namespace CW.Models
             TicketRouteStopFromNavigations = new HashSet<Ticket>();
             TicketRouteStopToNavigations = new HashSet<Ticket>();
         }
-
+        
         public int StopId { get; set; }
         public int RouteId { get; set; }
         public int CityId { get; set; }

@@ -1,0 +1,56 @@
+﻿@model CW.Models.Route
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Route</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Mileage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Mileage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfRoute)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfRoute)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CityFromNavigation.City1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CityFromNavigation.City1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CityToNavigation.City1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CityToNavigation.City1)
+        </dd>
+        <dd>
+
+        </dd>
+        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+        {
+            <a asp-action="AddStop" asp-route-id="@Model.RouteId">Add stop</a>
+        }
+        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.RouteId">Edit</a>
+        }
+        <a asp-action="SeeStops" asp-route-id="@Model.RouteId">See stops</a>|
+        <a asp-action="Index">Back to List</a>
+    </dl>
+</div>
+<div>
+    
+
+</div>

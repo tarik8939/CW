@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CW.Models.RouteStop>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.City.City1)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(ModelItem => item.City.City1)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

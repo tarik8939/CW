@@ -21,4 +21,12 @@
     <Folder Include="Pages\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Routes\SeeStops.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Routes\SeeStops.cshtml" />
+  </ItemGroup>
+
 </Project>

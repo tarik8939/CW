@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CW.Models.Route>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>All routes</h1>
+
+<p>
+    <a asp-action="Create">Add new route</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.RouteName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mileage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfRoute)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RouteName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Mileage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfRoute)
+            </td>
+
+            <td>
+
+                <a asp-action="GetSchedules" asp-route-id="@item.RouteId">See schedule</a> |
+                <a asp-action="Details" asp-route-id="@item.RouteId">Details</a>
+
+                @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.RouteId">Edit |</a>
+                    <a asp-action="Delete" asp-route-id="@item.RouteId">Delete</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

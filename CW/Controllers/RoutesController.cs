@@ -22,7 +22,9 @@ namespace CW.Controllers
         // GET: Routes
         public async Task<IActionResult> Index()
         {
-            var cWContext = _context.Routes.Include(r => r.CityFromNavigation).Include(r => r.CityToNavigation);
+            var cWContext = _context.Routes
+                .Include(r => r.CityFromNavigation)
+                .Include(r => r.CityToNavigation);
             return View(await cWContext.ToListAsync());
         }
         [HttpGet]
@@ -56,27 +58,20 @@ namespace CW.Controllers
             return View("../Schedules/Index", schedule);
         }
 
-        // GET: Routes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [Authorize(Roles = "Admin,Cashier-Intern,Cashier")]
+        public async Task<IActionResult> GetSchedules(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var list = await _context.Schedules
+                .Include(x=>x.Transport)
+                .ThenInclude(x=>x.Brand)
+                .Include(x=>x.Worker)
+                .Where(x => x.RouteId == id).ToListAsync();
 
-            var route = await _context.Routes
-                .Include(r => r.CityFromNavigation)
-                .Include(r => r.CityToNavigation)
-                .FirstOrDefaultAsync(m => m.RouteId == id);
-            if (route == null)
-            {
-                return NotFound();
-            }
-
-            return View(route);
+            return View( list);
         }
 
         // GET: Routes/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["CityFrom"] = new SelectList(_context.Cities, "CityId", "City1");
@@ -89,10 +84,15 @@ namespace CW.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RouteId,Mileage,CityFrom,CityTo,NumberOfRoute,StopCount,DateAdded,DateUpdated")] Route route)
+        public async Task<IActionResult> Create(Route route)
         {
+            var cityfrom = _context.Cities.FirstOrDefault(x => x.CityId == route.CityFrom);
+            var cityto = _context.Cities.FirstOrDefault(x => x.CityId == route.CityTo);
+            route.Mileage = (int?) CalcDist(cityfrom, cityto);
             if (ModelState.IsValid)
             {
+                route.DateAdded = DateTime.Now;
+                route.DateUpdated = DateTime.Now;
                 _context.Add(route);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -102,7 +102,16 @@ namespace CW.Controllers
             return View(route);
         }
 
+        public double CalcDist(City cityfrom, City cityto)
+        {
+            const double R = 6371;
+            double sin1 = Math.Sin((double) ((cityfrom.latitude - cityto.latitude) / 2));
+            double sin2 = Math.Sin((double) ((cityfrom.longitude - cityto.longitude) / 2));
+            return 2*R*Math.Asin(Math.Sqrt(sin1*sin1+sin2*sin2*Math.Cos((double)cityfrom.latitude) * Math.Cos((double)cityto.latitude)));
+        }
+
         // GET: Routes/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -125,17 +134,20 @@ namespace CW.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RouteId,Mileage,CityFrom,CityTo,NumberOfRoute,StopCount,DateAdded,DateUpdated")] Route route)
+        public async Task<IActionResult> Edit(int id, Route route)
         {
             if (id != route.RouteId)
             {
                 return NotFound();
             }
-
+            var cityfrom = _context.Cities.FirstOrDefault(x => x.CityId == route.CityFrom);
+            var cityto = _context.Cities.FirstOrDefault(x => x.CityId == route.CityTo);
+            route.Mileage = (int?)CalcDist(cityfrom, cityto);
             if (ModelState.IsValid)
             {
                 try
                 {
+                    route.DateUpdated = DateTime.Now;
                     _context.Update(route);
                     await _context.SaveChangesAsync();
                 }
@@ -157,7 +169,49 @@ namespace CW.Controllers
             return View(route);
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            var item = _context.Routes
+                .Include(x => x.RouteStops)
+                .ThenInclude(x => x.City)
+                .Include(x => x.CityFromNavigation)
+                .Include(x => x.CityToNavigation)
+                .FirstOrDefault(x => x.RouteId == id);
+            return View(item);
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin,Cashier-Intern,Cashier")]
+        public async Task<IActionResult> SeeStops(int id)
+        {
+            var items = await _context.RouteStops
+                .Include(x => x.City)
+                .Where(x=>x.RouteId == id).ToListAsync();
+            return View("SeeStops", items);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddStop(int id)
+        {
+            ViewData["City"] = new SelectList(_context.Cities, "CityId", "City1");
+            var obj = new RouteStop();
+            obj.RouteId = id;
+            return View(obj);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddStop(RouteStop stop)
+        {
+            stop.DateAdded = DateTime.Now;
+            stop.DateUpdated = DateTime.Now;
+            _context.Add(stop);
+            return View();
+        }
+
+
         // GET: Routes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -192,5 +246,6 @@ namespace CW.Controllers
         {
             return _context.Routes.Any(e => e.RouteId == id);
         }
+
     }
 }

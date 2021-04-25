@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -17,6 +18,7 @@ namespace CW.Models
         }
 
         public int CityId { get; set; }
+        [Display(Name = "City")]
         public string City1 { get; set; }
         public double? latitude { get; set; }//широта
         public double? longitude { get; set; }//довгота
