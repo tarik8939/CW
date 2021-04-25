@@ -25,19 +25,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Driver-Intern") || @User.IsInRole("Driver") == true))
-                        {
-                            <li class="nav-item">
-                                @Html.ActionLink("Get schedule", "GetSheduleForWorker", "Schedules", new { email = @User.Identity.Name }, new { @class = "nav-link text-dark" })
-                            </li>
-                        }
-                        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Cashier-Intern") || @User.IsInRole("Cashier") == true))
-                        {
-                            <li class="nav-item">
-                                @Html.ActionLink("Search route", "Search", "Routes", new {  }, new { @class = "nav-link text-dark" })
-                            </li>
-                        }
-                        </ul>
+                    </ul>
                 </div>
 
                 @if (@User.Identity.IsAuthenticated == true)
