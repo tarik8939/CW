@@ -40,13 +40,13 @@
         </dd>
         @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
         {
-            <a asp-action="AddStop" asp-route-id="@Model.RouteId">Add stop</a>
+            <a asp-action="AddStop" asp-route-id="@Model.RouteId">Add stop|</a>
         }
         @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
         {
-            <a asp-action="Edit" asp-route-id="@Model.RouteId">Edit</a>
+            <a asp-action="Edit" asp-route-id="@Model.RouteId">Edit|</a>
         }
-        <a asp-action="SeeStops" asp-route-id="@Model.RouteId">See stops</a>|
+        <a asp-action="SeeStops" asp-route-id="@Model.RouteId">See stops|</a>
         <a asp-action="Index">Back to List</a>
     </dl>
 </div>

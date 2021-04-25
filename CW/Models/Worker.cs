@@ -23,6 +23,7 @@ namespace CW.Models
         [Display(Name = "Last name")]
         public string LastName { get; set; }
         public string Password { get; set; }
+        [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public DateTime? DateAdded { get; set; }
