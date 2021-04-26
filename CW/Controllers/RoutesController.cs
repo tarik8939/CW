@@ -205,7 +205,8 @@ namespace CW.Controllers
         {
             stop.DateAdded = DateTime.Now;
             stop.DateUpdated = DateTime.Now;
-            _context.Add(stop);
+            _context.RouteStops.Add(stop);
+            await _context.SaveChangesAsync();
             return View();
         }
 
