@@ -48,6 +48,29 @@ namespace CW.Controllers
             return View(transport);
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateBrand()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateBrand(Brand brand)
+        {
+            if (ModelState.IsValid)
+            {
+                brand.DateAdded = DateTime.Now;
+                brand.DateUpdated = DateTime.Now;
+                _context.Add(brand);
+                await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+                return View("Create");
+            }
+            return View(brand);
+        }
+
         // GET: Transports/Create
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
