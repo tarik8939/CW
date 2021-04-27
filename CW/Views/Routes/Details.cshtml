@@ -37,16 +37,19 @@
         <dd>
 
         </dd>
-        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
-        {
-            <a asp-action="AddStop" asp-route-id="@Model.RouteId">Add stop |</a>
-        }
-        @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
-        {
-            <a asp-action="Edit" asp-route-id="@Model.RouteId">Edit</a>
-        }
-        |<a asp-action="SeeStops" asp-route-id="@Model.RouteId">See stops</a>|
-        <a asp-action="Index">Back to List</a>
+        <div>
+            @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+            {
+                <a asp-action="AddStop" asp-route-id="@Model.RouteId" class="btn btn-outline-primary">Add stop</a>
+            }
+            @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.RouteId" class="btn btn-outline-primary">Edit</a>
+            }
+            <a asp-action="SeeStops" asp-route-id="@Model.RouteId" class="btn btn-outline-primary">See stops</a>
+            <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+        </div>
+
     </dl>
 </div>
 <div>

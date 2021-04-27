@@ -41,16 +41,14 @@
                 <span asp-validation-for="PricePerKm" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a asp-action="CreateBrand">Add new brand</a>
+                <input type="submit" value="Create" class="btn btn-outline-success" />
+                <a asp-action="CreateBrand" class="btn btn-outline-primary" >Add new brand</a>
+                <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 

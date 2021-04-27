@@ -27,10 +27,6 @@ namespace CW.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
         public IActionResult ToLogin()
         {
             return Redirect("~/Account/Login");
