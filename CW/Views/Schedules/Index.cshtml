@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>List of schedules</h1>
+<h1 class="text-center">List of schedules</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add new</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>
@@ -34,7 +34,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Transport)
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -63,18 +65,23 @@
             </td>
             <td>
 
-                <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a> |
+                <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a>|
+                @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.ScheduleId">Delete</a>
+                }|
 
                 @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
                 {
 
-                    <a asp-action="Delete" asp-route-id="@item.ScheduleId">Delete</a>
-                    <a asp-action="Edit" asp-route-id="@item.ScheduleId">Edit</a> 
-                }
-            </td>
-            <td>
+                    <a asp-action="Edit" asp-route-id="@item.ScheduleId">Edit</a>
+                }|
+
                 <a asp-controller="Purchases" asp-action="BuyTicket" asp-route-id="@item.ScheduleId">Buy</a>
             </td>
+            @*<td>
+                <a asp-controller="Purchases" asp-action="BuyTicket" asp-route-id="@item.ScheduleId">Buy</a>
+            </td>*@
         </tr>
 }
     </tbody>
