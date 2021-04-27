@@ -121,7 +121,7 @@ namespace CW.Controllers
         public IActionResult Create(Ticket ticket)
         {
             ViewData["DepartmentId"] = new SelectList(_context.Departments.Include(x=>x.City), "DeptId", "Fulladdress");
-            ViewData["TicketPrice"] = ticket.Price;
+            ViewData["TicketPrice"] = Convert.ToInt32(ticket.Price);
             ViewData["TicketID"] = ticket.TicketId;
             return View();
         }
