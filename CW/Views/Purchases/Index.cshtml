@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CW.Models.Purchase>
+
+@{
+    ViewData["Title"] = "All purchases";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1  class="text-center">All purchases</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client.ClientFullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department.Fulladdress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket.asd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Worker.WorkerFullName)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.ClientFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Fulladdress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ticket.asd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Worker.WorkerFullName)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.PurchaseId">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

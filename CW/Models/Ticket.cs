@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
@@ -22,6 +23,10 @@ namespace CW.Models
         public DateTime? ArrivalTime { get; set; }
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUpdated { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Initial/End city")]
+        public string asd => $"{RouteStopFromNavigation.City.City1}-{RouteStopToNavigation.City.City1}";
 
         public virtual RouteStop RouteStopFromNavigation { get; set; }
         public virtual RouteStop RouteStopToNavigation { get; set; }

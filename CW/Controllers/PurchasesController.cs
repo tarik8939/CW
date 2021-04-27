@@ -23,7 +23,17 @@ namespace CW.Controllers
         // GET: Purchases
         public async Task<IActionResult> Index()
         {
-            var cWContext = _context.Purchases.Include(p => p.Client).Include(p => p.Department).Include(p => p.Ticket).Include(p => p.Worker);
+            var cWContext = _context.Purchases
+                .Include(p => p.Client)
+                .Include(p => p.Department)
+                    .ThenInclude(x=>x.City)
+                .Include(p => p.Ticket)
+                .ThenInclude(x=>x.RouteStopFromNavigation)
+                .ThenInclude(x=>x.City)
+                .Include(p => p.Ticket)
+                .ThenInclude(x => x.RouteStopToNavigation)
+                .ThenInclude(x=>x.City)
+                .Include(p => p.Worker);
             return View(await cWContext.ToListAsync());
         }
         //[HttpPost]
@@ -106,7 +116,13 @@ namespace CW.Controllers
             var purchase = await _context.Purchases
                 .Include(p => p.Client)
                 .Include(p => p.Department)
+                .ThenInclude(x => x.City)
                 .Include(p => p.Ticket)
+                .ThenInclude(x => x.RouteStopFromNavigation)
+                .ThenInclude(x => x.City)
+                .Include(p => p.Ticket)
+                .ThenInclude(x => x.RouteStopToNavigation)
+                .ThenInclude(x => x.City)
                 .Include(p => p.Worker)
                 .FirstOrDefaultAsync(m => m.PurchaseId == id);
             if (purchase == null)
@@ -165,97 +181,7 @@ namespace CW.Controllers
             return View(purchase);
         }
 
-        // GET: Purchases/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var purchase = await _context.Purchases.FindAsync(id);
-            if (purchase == null)
-            {
-                return NotFound();
-            }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "ClientId", "FirstName", purchase.ClientId);
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DeptId", "Address", purchase.DepartmentId);
-            ViewData["TicketId"] = new SelectList(_context.Tickets, "TicketId", "TicketId", purchase.TicketId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "WorkerId", "Email", purchase.WorkerId);
-            return View(purchase);
-        }
-
-        // POST: Purchases/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PurchaseId,WorkerId,ClientId,TicketId,DepartmentId,PurchaseDate,TotalPrice,TicketCount,DateAdded,DateUpdated")] Purchase purchase)
-        {
-            if (id != purchase.PurchaseId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(purchase);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PurchaseExists(purchase.PurchaseId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "ClientId", "FirstName", purchase.ClientId);
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DeptId", "Address", purchase.DepartmentId);
-            ViewData["TicketId"] = new SelectList(_context.Tickets, "TicketId", "TicketId", purchase.TicketId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "WorkerId", "Email", purchase.WorkerId);
-            return View(purchase);
-        }
-
-        // GET: Purchases/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var purchase = await _context.Purchases
-                .Include(p => p.Client)
-                .Include(p => p.Department)
-                .Include(p => p.Ticket)
-                .Include(p => p.Worker)
-                .FirstOrDefaultAsync(m => m.PurchaseId == id);
-            if (purchase == null)
-            {
-                return NotFound();
-            }
-
-            return View(purchase);
-        }
-
-        // POST: Purchases/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var purchase = await _context.Purchases.FindAsync(id);
-            _context.Purchases.Remove(purchase);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        
 
         private bool PurchaseExists(int id)
         {

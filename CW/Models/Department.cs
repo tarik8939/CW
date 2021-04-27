@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
@@ -20,6 +21,7 @@ namespace CW.Models
         public DateTime? DateUpdated { get; set; }
 
         [NotMapped]
+        [Display(Name = "Department address")]
         public string Fulladdress =>$"{City.City1}: {Address}";
 
         public virtual City City { get; set; }

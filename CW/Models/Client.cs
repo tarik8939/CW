@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -17,6 +19,10 @@ namespace CW.Models
         public string LastName { get; set; }
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUpdated { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Cluent full name")]
+        public string ClientFullName => $"{FirstName} {LastName}";
 
         public Client(string firstName, string lastName)
         {
