@@ -23,7 +23,9 @@ namespace CW.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            var cWContext = _context.Transports.Include(t => t.Brand).Include(t => t.BusType);
+            var cWContext = _context.Transports
+                .Include(t => t.Brand)
+                .Include(t => t.BusType);
             return View(await cWContext.ToListAsync());
         }
 
@@ -66,7 +68,7 @@ namespace CW.Controllers
                 _context.Add(brand);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
-                return View("Create");
+                return RedirectToAction("Create");
             }
             return View(brand);
         }

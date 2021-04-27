@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<CW.Models.Transport>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All transports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">All transports</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add new transport</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>
@@ -20,15 +20,15 @@
                 @Html.DisplayNameFor(model => model.SeatCount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.PricePerKm)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BusType)
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -39,9 +39,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SeatCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PricePerKm)

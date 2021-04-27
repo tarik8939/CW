@@ -31,6 +31,7 @@ namespace CW.Models
         public string TransportName => $"{Brand.BrandName} - {ModelName}";
 
         public virtual Brand Brand { get; set; }
+        [Display(Name = "Type")]
         public virtual BusType BusType { get; set; }
         public virtual ICollection<Schedule> Schedules { get; set; }
     }

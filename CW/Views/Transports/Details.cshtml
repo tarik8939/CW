@@ -1,15 +1,13 @@
 ﻿@model CW.Models.Transport
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details about transport";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1 class="text-center">Details about transport</h1>
 
 <div>
-    <h4>Transport</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SeatCount)
