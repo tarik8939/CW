@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<CW.Models.Worker>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All workers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">All workers</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add new workers</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover" >
     <thead>
         <tr>
             <th>
@@ -27,7 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Role)
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
