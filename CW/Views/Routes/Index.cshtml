@@ -10,7 +10,7 @@
 <p>
     <a asp-action="Create">Add new route</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover">
     <thead>
         <tr>
 
@@ -23,7 +23,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.NumberOfRoute)
             </th>
-            <th></th>
+            <th>
+                Action
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -42,8 +44,8 @@
 
             <td>
 
-                <a asp-action="GetSchedules" asp-route-id="@item.RouteId">See schedule</a> |
-                <a asp-action="Details" asp-route-id="@item.RouteId">Details</a>
+                <a asp-action="GetSchedules" asp-route-id="@item.RouteId">See schedule</a>|
+                <a asp-action="Details" asp-route-id="@item.RouteId">Details</a>|
 
                 @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
                 {

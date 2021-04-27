@@ -1,15 +1,14 @@
 ﻿@model CW.Models.Route
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details about route";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1 class="text-center">Details about route</h1>
 
 <div>
-    <h4>Route</h4>
-    <hr />
+
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Mileage)
@@ -40,13 +39,13 @@
         </dd>
         @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
         {
-            <a asp-action="AddStop" asp-route-id="@Model.RouteId">Add stop|</a>
+            <a asp-action="AddStop" asp-route-id="@Model.RouteId">Add stop |</a>
         }
         @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
         {
-            <a asp-action="Edit" asp-route-id="@Model.RouteId">Edit|</a>
+            <a asp-action="Edit" asp-route-id="@Model.RouteId">Edit</a>
         }
-        <a asp-action="SeeStops" asp-route-id="@Model.RouteId">See stops|</a>
+        |<a asp-action="SeeStops" asp-route-id="@Model.RouteId">See stops</a>|
         <a asp-action="Index">Back to List</a>
     </dl>
 </div>
