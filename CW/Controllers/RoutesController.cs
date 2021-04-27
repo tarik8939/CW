@@ -89,6 +89,7 @@ namespace CW.Controllers
             var cityfrom = _context.Cities.FirstOrDefault(x => x.CityId == route.CityFrom);
             var cityto = _context.Cities.FirstOrDefault(x => x.CityId == route.CityTo);
             route.Mileage = (int?) CalcDist(cityfrom, cityto);
+            var a = 5;
             if (ModelState.IsValid)
             {
                 route.DateAdded = DateTime.Now;
@@ -102,12 +103,19 @@ namespace CW.Controllers
             return View(route);
         }
 
+        public  double Radians(double? x)
+        {
+            return (double) (x * Math.PI / 180);
+        }
+
         public double CalcDist(City cityfrom, City cityto)
         {
             const double R = 6371;
             double sin1 = Math.Sin((double) ((cityfrom.latitude - cityto.latitude) / 2));
             double sin2 = Math.Sin((double) ((cityfrom.longitude - cityto.longitude) / 2));
-            return 2*R*Math.Asin(Math.Sqrt(sin1*sin1+sin2*sin2*Math.Cos((double)cityfrom.latitude) * Math.Cos((double)cityto.latitude)));
+            
+
+            return (2*R*Math.Cos(Math.Acos(sin1*sin1+sin2*sin2*Math.Cos((double)cityfrom.latitude) * Math.Cos((double)cityto.latitude))))/17;
         }
 
         // GET: Routes/Edit/5
@@ -205,8 +213,17 @@ namespace CW.Controllers
         {
             stop.DateAdded = DateTime.Now;
             stop.DateUpdated = DateTime.Now;
+            var r = _context.Routes.FirstOrDefault(x => x.RouteId == stop.RouteId);
+            var cityfrom = _context.Cities.FirstOrDefault(x => x.CityId == r.CityFrom);
+            var cityto = _context.Cities.FirstOrDefault(x => x.CityId == stop.CityId);
+            stop.DistanceToStop = CalcDist(cityfrom, cityto);
+
+       
+
+            var a = 6;
             _context.RouteStops.Add(stop);
             await _context.SaveChangesAsync();
+            ViewData["City"] = new SelectList(_context.Cities, "CityId", "City1");
             return View();
         }
 

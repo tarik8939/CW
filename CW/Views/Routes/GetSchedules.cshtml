@@ -5,8 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<table class="table">
+<p>
+    <a asp-action="Create" asp-controller="Schedules">Add new</a>
+</p>
+<table class="table table-bordered table-hover">
     <thead>
     <tr>
         <th>
@@ -49,7 +51,7 @@
             @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
             {
         <td>
-            <a asp-action="Edit" asp-controller="Schedules" asp-route-id="@item.ScheduleId">Edit</a>|
+            <a asp-action="Edit" asp-controller="Schedules" asp-route-id="@item.ScheduleId">Edit</a>
             <a asp-action="Delete" asp-controller="Schedules" asp-route-id="@item.ScheduleId">Delete</a>
         </td>
             }
