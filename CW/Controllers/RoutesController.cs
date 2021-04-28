@@ -96,6 +96,8 @@ namespace CW.Controllers
                 route.DateUpdated = DateTime.Now;
                 _context.Add(route);
                 await _context.SaveChangesAsync();
+                var r = _context.Routes.ToList().Last();
+                AddStoping(r);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CityFrom"] = new SelectList(_context.Cities, "CityId", "City1", route.CityFrom);
@@ -103,18 +105,13 @@ namespace CW.Controllers
             return View(route);
         }
 
-        public  double Radians(double? x)
-        {
-            return (double) (x * Math.PI / 180);
-        }
 
         public double CalcDist(City cityfrom, City cityto)
         {
             const double R = 6371;
             double sin1 = Math.Sin((double) ((cityfrom.latitude - cityto.latitude) / 2));
             double sin2 = Math.Sin((double) ((cityfrom.longitude - cityto.longitude) / 2));
-            
-
+ 
             return (2*R*Math.Cos(Math.Acos(sin1*sin1+sin2*sin2*Math.Cos((double)cityfrom.latitude) * Math.Cos((double)cityto.latitude))))/17;
         }
 
@@ -193,7 +190,7 @@ namespace CW.Controllers
         {
             var items = await _context.RouteStops
                 .Include(x => x.City)
-                .Where(x=>x.RouteId == id).ToListAsync();
+                .Where(x=>x.RouteId == id).OrderBy(x=>x.DistanceToStop).ToListAsync();
             return View("SeeStops", items);
         }
 
@@ -217,14 +214,31 @@ namespace CW.Controllers
             var cityfrom = _context.Cities.FirstOrDefault(x => x.CityId == r.CityFrom);
             var cityto = _context.Cities.FirstOrDefault(x => x.CityId == stop.CityId);
             stop.DistanceToStop = CalcDist(cityfrom, cityto);
-
-       
-
-            var a = 6;
             _context.RouteStops.Add(stop);
             await _context.SaveChangesAsync();
             ViewData["City"] = new SelectList(_context.Cities, "CityId", "City1");
             return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async void AddStoping(Route route)
+        {
+            var city1 = _context.Cities.FirstOrDefault(x => x.CityId == route.CityFrom);
+            var city2 = _context.Cities.FirstOrDefault(x => x.CityId == route.CityTo);
+
+            var stop1 = new RouteStop();
+            stop1.CityId = city1.CityId;
+            stop1.RouteId = route.RouteId;
+            stop1.DistanceToStop = CalcDist(city1, city1);
+            
+            var stop2 = new RouteStop();
+            stop2.CityId = city2.CityId;
+            stop2.RouteId = route.RouteId;
+            stop2.DistanceToStop = CalcDist(city1, city2);
+            _context.RouteStops.Add(stop1);
+            _context.RouteStops.Add(stop2);
+            await _context.SaveChangesAsync();
         }
 
 

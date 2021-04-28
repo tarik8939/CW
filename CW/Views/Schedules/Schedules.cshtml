@@ -23,10 +23,10 @@
             @Html.DisplayNameFor(model => model.Route.Mileage)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Route)
+            @Html.DisplayNameFor(model => model.Transport)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Transport)
+            Actions
         </th>
     </tr>
     </thead>
@@ -49,14 +49,11 @@
                 @Html.DisplayFor(modelItem => item.Route.Mileage)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Route.RouteId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Transport.TransportName)
             </td>
 
             <td>
-                @*<a asp-action="Edit" asp-route-id="@item.ScheduleId">Edit</a> |*@
+                @* <a asp-action="Edit" asp-route-id="@item.ScheduleId">Edit</a> | *@
                 <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a> 
                 @*<a asp-action="Delete" asp-route-id="@item.ScheduleId">Delete</a>*@
             </td>
