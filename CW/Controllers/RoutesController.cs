@@ -89,7 +89,6 @@ namespace CW.Controllers
             var cityfrom = _context.Cities.FirstOrDefault(x => x.CityId == route.CityFrom);
             var cityto = _context.Cities.FirstOrDefault(x => x.CityId == route.CityTo);
             route.Mileage = (int?) CalcDist(cityfrom, cityto);
-            var a = 5;
             if (ModelState.IsValid)
             {
                 route.DateAdded = DateTime.Now;

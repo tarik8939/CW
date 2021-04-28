@@ -26,12 +26,16 @@
             @Html.DisplayNameFor(model => model.Transport)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Worker.WorkerFullName)
+        </th>
+        <th>
             Actions
         </th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDateTime)
@@ -51,10 +55,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Transport.TransportName)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Worker.WorkerFullName)
+            </td>
 
             <td>
                 @* <a asp-action="Edit" asp-route-id="@item.ScheduleId">Edit</a> | *@
-                <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a> 
+                <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a>
                 @*<a asp-action="Delete" asp-route-id="@item.ScheduleId">Delete</a>*@
             </td>
         </tr>

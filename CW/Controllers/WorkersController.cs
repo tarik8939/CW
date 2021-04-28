@@ -68,7 +68,9 @@ namespace CW.Controllers
             {
                 worker.DateAdded = DateTime.Now;
                 worker.DateUpdated = DateTime.Now;
-                _context.Add(worker);
+                //worker.WorkerId = _context.Workers.Count()+1;
+                worker.WorkerId = _context.Workers.Max(x=>x.WorkerId)+1;
+                _context.Workers.Add(worker);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

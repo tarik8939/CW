@@ -46,7 +46,7 @@ namespace CW.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Incorrect email or/and password");
             }
             //return View(model);
             return View("../Home/Index", model);

@@ -8,7 +8,11 @@
 <h1 class="text-center">All shedules</h1>
 
 <p>
+    @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
+    {
+
     <a asp-action="Create" asp-controller="Schedules">Add new</a>
+    }
 </p>
 <table class="table table-bordered table-hover">
     <thead>
@@ -28,6 +32,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Route.Mileage)
             </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Worker.WorkerFullName)
+                        </th>
             <th>
                 @Html.DisplayNameFor(model => model.Transport)
             </th>
@@ -54,12 +61,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Route.Mileage)
             </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Worker.WorkerFullName)
+                        </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Transport.TransportName)
             </td>
             <td>
 
-                <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a>|
                 @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
                 {
                     <a asp-action="Delete" asp-route-id="@item.ScheduleId">Delete</a>
@@ -74,7 +83,7 @@
                 @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Cashier") || @User.IsInRole("Cashier-Intern")))
                 {
                     <a asp-controller="Purchases" asp-action="BuyTicket" asp-route-id="@item.ScheduleId">Buy</a>
-                }|
+                }
             </td>
 
         </tr>
