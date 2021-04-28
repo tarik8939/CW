@@ -39,11 +39,12 @@ namespace CW.Controllers
         {
             var route2 = await _context.Schedules.Where(x => x.Worker.Email == email)
                 .Include(x => x.Route)
-                .ThenInclude(x => x.CityFromNavigation)
+                    .ThenInclude(x => x.CityFromNavigation)
                 .Include(x => x.Route)
-                .ThenInclude(x => x.CityToNavigation)
+                    .ThenInclude(x => x.CityToNavigation)
                 .Include(x => x.Transport)
-                .ThenInclude(x => x.Brand)
+                    .ThenInclude(x => x.Brand)
+                .Include(x=>x.Worker)
                 .ToListAsync();
 
             return View("../Schedules/Schedules", route2);
@@ -64,7 +65,7 @@ namespace CW.Controllers
                 .Include(s => s.Route)
                     .ThenInclude(x => x.CityToNavigation)
                 .Include(s => s.Transport)
-                .ThenInclude(x=>x.Brand)
+                    .ThenInclude(x=>x.Brand)
                 .Include(s => s.Worker)
                 .FirstOrDefaultAsync(m => m.ScheduleId == id);
             if (schedule == null)

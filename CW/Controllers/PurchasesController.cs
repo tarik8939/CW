@@ -36,7 +36,7 @@ namespace CW.Controllers
                 .Include(p => p.Worker);
             return View(await cWContext.ToListAsync());
         }
-        //[HttpPost]
+
         [HttpGet]
         [Authorize(Roles = "Admin,Cashier-Intern,Cashier")]
         public async Task<IActionResult> BuyTicket(int id)
@@ -78,20 +78,18 @@ namespace CW.Controllers
             DateTime startTime = CalcTime(schedule,obj);
             DateTime endTime = CalcTime(schedule, obj2);
             t.ScheduleId = schedule.ScheduleId;
-            t.Price = (decimal) (transport.PricePerKm * (decimal?) (obj2.DistanceToStop - obj.DistanceToStop));
+            t.Price = (decimal) ((transport.PricePerKm * (decimal?) (obj2.DistanceToStop - obj.DistanceToStop)))/10;
             t.RouteStopFrom = obj.StopId;
             t.RouteStopTo = obj2.StopId;
             t.StartTime = startTime;
             t.ArrivalTime = endTime;
             t.DateAdded = DateTime.Now;
             t.DateUpdated = DateTime.Now;
-            //return View("../Purchases/Create", t);
             _context.Add(t);
             _context.SaveChanges();
             var tc = _context.Tickets.ToList().Last();
 
             return RedirectToAction("Create", tc);
-            //return RedirectToAction("CreatePurchase",new {Ticket =t.ScheduleId});
 
         }
 
@@ -157,6 +155,8 @@ namespace CW.Controllers
             }
             else
             {
+                Clieent.DateAdded = DateTime.Now;
+                Clieent.DateUpdated = DateTime.Now;
                 _context.Add(Clieent);
                 _context.SaveChanges();
                 Clieent = _context.Clients.ToList().Last();
@@ -174,7 +174,6 @@ namespace CW.Controllers
                 purchase.PurchaseDate = DateTime.Now;
                 _context.Add(purchase);
                 await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
                 return Redirect("../Home/Index");
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments.Include(x => x.City), "DeptId", "Fulladdress");
