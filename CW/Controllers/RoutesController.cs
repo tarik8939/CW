@@ -40,11 +40,14 @@ namespace CW.Controllers
         [Authorize(Roles = "Admin,Cashier-Intern,Cashier")]
         public async Task<IActionResult> FindRoute(Route route)
         {
-            var list = _context.Routes.Where(x => x.CityFrom == route.CityFrom).Where(x => x.CityTo == route.CityTo)
-                .ToList();
+
             var r = _context.Routes.Where(x => x.CityFrom == route.CityFrom).Where(x => x.CityTo == route.CityTo)
                 .FirstOrDefault(x => x.CityFrom == route.CityFrom);
-            var test1 = _context.RouteStops.Where(x => x.RouteId == r.RouteId).ToList();
+
+            if (r==null)
+            {
+                return RedirectToAction("Search");
+            }
 
             var schedule = await _context.Schedules.Where(x => x.RouteId == r.RouteId)
                 .Include(x=>x.Worker)
@@ -55,7 +58,9 @@ namespace CW.Controllers
                 .Include(x => x.Transport)
                     .ThenInclude(x => x.Brand)
                 .ToListAsync();
-            return View("../Schedules/Index", schedule);
+
+
+                return View("../Schedules/Index", schedule);
         }
 
         [Authorize(Roles = "Admin,Cashier-Intern,Cashier")]
