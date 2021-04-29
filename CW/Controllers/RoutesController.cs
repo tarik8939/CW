@@ -49,11 +49,11 @@ namespace CW.Controllers
             var schedule = await _context.Schedules.Where(x => x.RouteId == r.RouteId)
                 .Include(x=>x.Worker)
                 .Include(x=>x.Route)
-                    .ThenInclude(x=>x.CityFromNavigation)
+                    .ThenInclude(x => x.CityFromNavigation)
                 .Include(x => x.Route)
                     .ThenInclude(x => x.CityToNavigation)
-                .Include(x=>x.Transport)
-                    .ThenInclude(x=>x.Brand)
+                .Include(x => x.Transport)
+                    .ThenInclude(x => x.Brand)
                 .ToListAsync();
             return View("../Schedules/Index", schedule);
         }

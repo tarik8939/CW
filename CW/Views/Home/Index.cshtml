@@ -17,7 +17,7 @@
         @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Driver-Intern") || @User.IsInRole("Driver") == true))
         {
             <div class="text-center col-md-12">
-                @Html.ActionLink("Get schedule", "GetSheduleForWorker", "Schedules", new {email = @User.Identity.Name}, new {@class = "col-md-6 btn btn-primary"})
+                @Html.ActionLink("Schedules", "GetSheduleForWorker", "Schedules", new {email = @User.Identity.Name}, new {@class = "col-md-6 btn btn-primary"})
             </div>
         }
         @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Cashier-Intern") || @User.IsInRole("Cashier") == true))
@@ -29,32 +29,32 @@
         @if (@User.Identity.IsAuthenticated == true && (@User.IsInRole("Admin")))
         {
             <div class="text-center">
+                @* <div class="col-md-12 m-1 p-1"> *@
+                @*     @Html.ActionLink("Add route", "Create", "Routes", new {}, new {@class = "col-md-6 btn btn-primary"}) *@
+                @* </div> *@
                 <div class="col-md-12 m-1 p-1">
-                    @Html.ActionLink("Add route", "Create", "Routes", new {}, new {@class = "col-md-6 btn btn-primary"})
-                </div>
-                <div class="col-md-12 m-1 p-1">
-                    @Html.ActionLink("All routes", "Index", "Routes", new {}, new {@class = "col-md-6 btn btn-primary"})
+                    @Html.ActionLink("Routes", "Index", "Routes", new {}, new {@class = "col-md-6 btn btn-primary"})
                 </div>
                 @* <div class="col-md-8 m-1 p-1"> *@
                 @*     @Html.ActionLink("Search route", "Search", "Routes", new { }, new { @class = "col-md-6 btn btn-primary" }) *@
                 @* </div> *@
                 <div class="col-md-12 m-1 p-1">
-                    @Html.ActionLink("All schedules", "Index", "Schedules", new {}, new {@class = "col-md-6 btn btn-primary"})
+                    @Html.ActionLink("Schedules", "Index", "Schedules", new {}, new {@class = "col-md-6 btn btn-primary"})
                 </div>
                 <div class="col-md-12 m-1 p-1">
-                    @Html.ActionLink("All workers", "Index", "Workers", new {}, new {@class = "col-md-6 btn btn-primary"})
+                    @Html.ActionLink("Workers", "Index", "Workers", new {}, new {@class = "col-md-6 btn btn-primary"})
                 </div>
+                @* <div class="col-md-12 m-1 p-1"> *@
+                @*     @Html.ActionLink("Add worker", "Create", "Workers", new {}, new {@class = "col-md-6 btn btn-primary"}) *@
+                @* </div> *@
                 <div class="col-md-12 m-1 p-1">
-                    @Html.ActionLink("Add worker", "Create", "Workers", new {}, new {@class = "col-md-6 btn btn-primary"})
+                    @Html.ActionLink("Transports", "Index", "Transports", new {}, new {@class = "col-md-6 btn btn-primary"})
                 </div>
+                @* <div class="col-md-12 m-1 p-1"> *@
+                @*     @Html.ActionLink("Add transport", "Create", "Transports", new {}, new {@class = "col-md-6 btn btn-primary"}) *@
+                @* </div> *@
                 <div class="col-md-12 m-1 p-1">
-                    @Html.ActionLink("All transports", "Index", "Transports", new {}, new {@class = "col-md-6 btn btn-primary"})
-                </div>
-                <div class="col-md-12 m-1 p-1">
-                    @Html.ActionLink("Add transport", "Create", "Transports", new {}, new {@class = "col-md-6 btn btn-primary"})
-                </div>
-                <div class="col-md-12 m-1 p-1">
-                    @Html.ActionLink("All purchases", "Index", "Purchases", new {}, new {@class = "col-md-6 btn btn-primary"})
+                    @Html.ActionLink("Purchases", "Index", "Purchases", new {}, new {@class = "col-md-6 btn btn-primary"})
                 </div>
             </div>
         }

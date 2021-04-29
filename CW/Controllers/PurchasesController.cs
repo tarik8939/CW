@@ -66,7 +66,6 @@ namespace CW.Controllers
         [Authorize(Roles = "Admin,Cashier-Intern,Cashier")]
         public ActionResult CalculatePrice(Ticket t)
         {
-
             var obj = _context.RouteStops.Include(x=>x.City)
                 .Include(x=>x.Route).FirstOrDefault(x => x.StopId == t.RouteStopFrom);
             var obj2 = _context.RouteStops.Include(x => x.City)
@@ -78,7 +77,15 @@ namespace CW.Controllers
             DateTime startTime = CalcTime(schedule,obj);
             DateTime endTime = CalcTime(schedule, obj2);
             t.ScheduleId = schedule.ScheduleId;
-            t.Price = (decimal) ((transport.PricePerKm * (decimal?) (obj2.DistanceToStop - obj.DistanceToStop)))/10;
+            t.Price = (decimal) ((transport.PricePerKm * (decimal?) (obj2.DistanceToStop - obj.DistanceToStop)));
+            if (t.Price>1000 && t.Price<10000)
+            {
+                t.Price /= 10;
+            }
+            else if(t.Price>10001)
+            {
+                t.Price /= 100;
+            }
             t.RouteStopFrom = obj.StopId;
             t.RouteStopTo = obj2.StopId;
             t.StartTime = startTime;
