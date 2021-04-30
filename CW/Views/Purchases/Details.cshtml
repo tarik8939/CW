@@ -28,6 +28,18 @@
             @Html.DisplayFor(model => model.TicketCount)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.StartTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.StartTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.ArrivalTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.ArrivalTime)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Client)
         </dt>
         <dd class = "col-sm-10">

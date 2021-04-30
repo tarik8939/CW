@@ -104,8 +104,13 @@ namespace CW.Controllers
         private DateTime CalcTime(Schedule schedule, RouteStop? routeStop)
         {
             DateTime date =schedule.StartDateTime;
-            var time = Math.Ceiling(Convert.ToDouble(routeStop.DistanceToStop / 60.0)); 
+            var time = Math.Ceiling(Convert.ToDouble(routeStop.DistanceToStop / 60.0));
+            if (time>150)
+            {
+                time /= 15;
+            }
             date = date.AddHours(time);
+            var a = 6;
             return date;
         }
 
