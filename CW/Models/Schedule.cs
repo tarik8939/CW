@@ -26,7 +26,7 @@ namespace CW.Models
         public DateTime? DateUpdated { get; set; }
         [NotMapped]
         [Display(Name = "Travel time")]
-        public TimeSpan TimeInTravel => EndDateTime.Date.Subtract(StartDateTime.Date);
+        public TimeSpan TimeInTravel => EndDateTime.Subtract(StartDateTime);
 
         public virtual Route Route { get; set; }
         public virtual Transport Transport { get; set; }
