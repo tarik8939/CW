@@ -49,6 +49,7 @@ namespace CW.Controllers
                 return RedirectToAction("Search");
             }
 
+            var s = 5;
             var schedule = await _context.Schedules.Where(x => x.RouteId == r.RouteId)
                 .Include(x=>x.Worker)
                 .Include(x=>x.Route)
